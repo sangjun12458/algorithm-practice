@@ -13,20 +13,24 @@ for i in range(n):
 
 size, eaten, total_time = 2, 0, 0
 dirs = [(-1, 0), (0, -1), (0, 1), (1, 0)]
+visited = [[0]*n for _ in range(n)]
+time_stamp = 0
 
 def bfs(x, y, size):
+    global visited, time_stamp
+    time_stamp += 1
+
     q = deque([(x, y, 0)])
-    visited = [[0]*n for _ in range(n)]
-    visited[x][y] = 1
+    visited[x][y] = time_stamp
     fish = []
 
     while q:
         i, j, d = q.popleft()
         for di, dj in dirs:
             ni, nj = i + di, j + dj
-            if 0 <= ni < n and 0 <= nj < n and not visited[ni][nj]:
+            if 0 <= ni < n and 0 <= nj < n and visited[ni][nj] != time_stamp:
                 if space[ni][nj] <= size:
-                    visited[ni][nj] = 1
+                    visited[ni][nj] = time_stamp
                     if 0 < space[ni][nj] < size:
                         fish.append((d+1, ni, nj))
                     else:
