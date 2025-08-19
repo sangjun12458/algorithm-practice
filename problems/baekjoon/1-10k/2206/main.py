@@ -22,8 +22,10 @@ for i in range(n):
             for di, dj in dir:
                 ni, nj = ci + di, cj + dj
                 if ni == n-1 and nj == m-1:
-                    
+                    pass
                 if 0 <= ni < n and 0 <= nj < m and not visited[ni][nj]:
                     q.append((ni, nj, dist + 1))
 
         stage[i][j] = '1'
+
+        
