@@ -5,27 +5,42 @@ from collections import deque
 input = sys.stdin.readline
 n, m = map(int, input().split())
 stage = [[ch for ch in input().strip()] for _ in range(n)]
-stage[0][0] = '1'
 q = deque()
 dir = [(-1, 0), (0, -1), (0, 1), (1, 0)]
+visited = [[0] * m for _ in range(n)]
 
-for i in range(n):
-    for j in range(m):
-        if stage[i][j] == '0': continue
-        stage[i][j] = '0'
+q.append((0, 0, 1, 0))
+visited[0][0] = 1
 
-        q.append((i, j, 1))
-        visited = [[0] * m for _ in range(n)]
-        visited[i][j] = True
-        while q:
-            ci, cj, dist = q.popleft()
-            for di, dj in dir:
-                ni, nj = ci + di, cj + dj
-                if ni == n-1 and nj == m-1:
-                    pass
-                if 0 <= ni < n and 0 <= nj < m and not visited[ni][nj]:
-                    q.append((ni, nj, dist + 1))
+result = []
+while q:
+    i, j, dist, used_broken = q.popleft()
+    v = visited[i][j]
 
-        stage[i][j] = '1'
+    if i == n-1 and j == m-1:
+        result.append(dist)
+        break
 
-        
+    for di, dj in dir:
+        ni, nj = i + di, j + dj
+        if not (0 <= ni < n and 0 <= nj < m): continue
+        nv = visited[ni][nj]
+
+        if stage[ni][nj] == '0':
+            if nv == 0:
+                visited[ni][nj] = used_broken + 1
+                q.append((ni, nj, dist+1, used_broken))
+            elif nv == 2:
+                if not used_broken:
+                    visited[ni][nj] = 1
+                    q.append((ni, nj, dist+1, 0))
+        elif stage[ni][nj] == '1':
+            if nv == 0:
+                if not used_broken:
+                    visited[ni][nj] = 2
+                    q.append((ni, nj, dist+1, 1))
+
+if result:
+    print(result[0])
+else:
+    print(-1)
