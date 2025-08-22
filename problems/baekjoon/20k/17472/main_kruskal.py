@@ -1,3 +1,4 @@
+# 17472. 다리 만들기 2
 import sys
 from collections import deque
 
