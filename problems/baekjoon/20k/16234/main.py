@@ -2,26 +2,28 @@
 import sys
 from collections import deque
 input = sys.stdin.readline
+
 dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 n, l, r = map(int, input().split())
 nations = [list(map(int, input().split())) for _ in range(n)]
 
 def solve():
-    # 연합인지 확인, 연합 라벨링, 국가 개수 카운팅, 국가 인구수 합계
     labels = [[0] * n for _ in range(n)]
-    counts = [0] * (n * n + 1)
-    populations = [0] * (n * n + 1)
     q = deque()
     label = 0
+    pops = []
+    counts = []
+
     for i in range(n):
         for j in range(n):
-            if labels[i][j] != 0: continue 
+            if labels[i][j] != 0: 
+                continue 
             label += 1
-            labels[i][j] = label
             q.append((i, j))
-            counts[label] += 1
-            populations[label] += nations[i][j]
+            labels[i][j] = label
+            total_pop = nations[i][j]
+            cnt = 1
             while q:
                 x, y = q.popleft()
                 for dx, dy in dirs:
@@ -31,32 +33,23 @@ def solve():
                     if l <= abs(nations[x][y] - nations[nx][ny]) <= r:
                         labels[nx][ny] = label
                         q.append((nx, ny))
-                        counts[label] += 1
-                        populations[label] += nations[nx][ny]
+                        total_pop += nations[nx][ny]
+                        cnt += 1
+            pops.append(total_pop)
+            counts.append(cnt)
 
     if label == n * n:
-        result = False
-    else:
-        for i in range(n):
-            for j in range(n):
-                nations[i][j] = populations[labels[i][j]] // counts[labels[i][j]]
-        result = True
+        return False
+    
+    for i in range(n):
+        for j in range(n):
+            g = labels[i][j] - 1
+            nations[i][j] = pops[g] // counts[g]
 
-    return result
-
-def check_border():
-    return
-
-def migrate():
-    return
-
+    return True
 
 cnt = 0
-while True:
-    result = solve()
-    if result:
-        cnt += 1
-    else:
-        break
+while solve():
+    cnt += 1
 
 print(cnt)
