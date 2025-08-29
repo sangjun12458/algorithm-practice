@@ -10,7 +10,7 @@ for _ in range(19997):
         while check[n] == 1:
             n = random.randint(1, 10000)
         check[n] = 1
-        print("? A", n)
+        print("? A", n, flush=True)
         resp = int(input().strip())
         if resp == 1:
             a = n
@@ -19,10 +19,10 @@ for _ in range(19997):
         while check[n] == 2:
             n = random.randint(1, 10000)
         check[n] = 2
-        print("? B", n)
+        print("? B", n, flush=True)
         resp = int(input().strip())
         if resp == 1:
             b = n
     if b != 0:
-        print("!", a+b)
+        print("!", a+b, flush=True)
         break
