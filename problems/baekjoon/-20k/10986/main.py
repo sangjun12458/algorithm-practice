@@ -1,5 +1,4 @@
 # 10986. 나머지 합
-
 import sys
 input = sys.stdin.readline
 
