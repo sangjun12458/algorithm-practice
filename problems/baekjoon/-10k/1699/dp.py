@@ -1,4 +1,4 @@
-# 1699. 제곱수의 합
+# 1699. 제곱수의 합 (Dynamic Programming)
 import sys, math
 input = sys.stdin.readline
 
