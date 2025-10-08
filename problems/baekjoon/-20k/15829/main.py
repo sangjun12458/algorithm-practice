@@ -6,6 +6,11 @@ l = int(input().strip())
 s = input().strip()
 
 hashing = 0
+r = 1
+
 for i in range(l):
-    hashing += (s[i] * (R ** i))
+    a = ord(s[i]) - ord('a') + 1
+    hashing = (hashing + a * r) % M
+    r = (r * R) % M
+    
 print(hashing)
