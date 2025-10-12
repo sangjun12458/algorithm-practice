@@ -1,23 +1,21 @@
 # 15654. N과 M (5)
-import sys
-sys.setrecursionlimit(10**6)
-
 n, m = map(int, input().split())
-nums = list(map(int, input().split()))
-visited = [0] * (n + 1)
-nums.sort()
+nums = sorted(map(int, input().split()))
+visited = [False] * n
+seq = []
 
-def dfs(s, depth):
-    if depth == m:
-        print(s.strip())
+def dfs():
+    if len(seq) == m:
+        print(*seq)
         return
 
     for i in range(n):
-        num = nums[i]
-        if visited[i] == 1:
+        if visited[i]:
             continue
-        visited[i] = 1
-        dfs(s + f'{num} ', depth + 1)
-        visited[i] = 0
+        visited[i] = True
+        seq.append(nums[i])
+        dfs()
+        seq.pop()
+        visited[i] = False
 
-dfs('', 0)
+dfs()
