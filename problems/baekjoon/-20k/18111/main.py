@@ -5,28 +5,29 @@ FULL_STACK = 256
 
 n, m, b = map(int, input().split())
 land = [list(map(int, input().split())) for _ in range(n)]
+blocks = [0] * (FULL_STACK + 1)
 
-result = float('inf')
-height = -1
+for i in range(n):
+    for j in range(m):
+        blocks[land[i][j]] += 1
+
+result_time = float('inf')
+result_height = -1
 for h in range(FULL_STACK + 1):
     cnt = 0
-    blocks = b
-    for i in range(n):
-        for j in range(m):
-            d = land[i][j] - h
-
-            if d >= 0:
-                cnt += d * 2
-                blocks += d
-            else:
-                cnt -= d
-                blocks += d
-
-    if blocks < 0:
+    owned_block = b
+    for x in range(FULL_STACK + 1):
+        d = x - h
+        if d >= 0:
+            cnt += 2 * d * blocks[x]
+            owned_block += d * blocks[x]
+        else:
+            cnt -= d * blocks[x]
+            owned_block += d * blocks[x]
+    if owned_block < 0:
         continue
-    
-    if cnt <= result:
-        result = cnt
-        height = h
+    if cnt <= result_time:
+        result_time = cnt
+        result_height = h
 
-print(result, height)
+print(result_time, result_height)
