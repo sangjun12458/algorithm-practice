@@ -1,23 +1,28 @@
 # 13549. 숨바꼭질 3
-n, k = map(int, input().split())
-visited = [-1] * 100001
-
 from collections import deque
-q = deque(5)
-visited[5] = 0
+END = int(1e5)
 
-while visited[k]:
-    start = q.popleft()
+n, k = map(int, input().split())
+visited = [-1] * (END + 1)
 
+q = deque([k])
+visited[k] = 0
 
-    q.append(start + 1)
-    q.append(start - 1)
-    q.append
+while q and visited[n] == -1:
+    now = q.popleft()
 
-    if visited[start + 1] == -1:
-        visited[start + 1] = visited[start] + 1
-        q.append(start + 1)
-    if visited[start - 1] == -1:
-        visited[start - 1] = visited[start] + 1
-        q.append(start + 1)
-    
+    next = now
+    while next > 0 and not next % 2:
+        next //= 2
+        if visited[next] == -1:
+            visited[next] = visited[now]
+            q.append(next)
+
+    for i in [-1, 1]:
+        next = now + i
+        if not (0 <= next <= END): continue
+        if visited[next] == -1:
+            visited[next] = visited[now] + 1
+            q.append(next)
+
+print(visited[n])    
