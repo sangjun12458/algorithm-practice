@@ -3,19 +3,21 @@ import sys
 input = sys.stdin.readline
 
 n = int(input().strip())
-max_arr = [0] * 3
-min_arr = [0] * 3
+max_arr = [[0] * 3 for _ in range(2)]
+min_arr = [[0] * 3 for _ in range(2)]
+
+OLD, NEW = 0, 1
 
 for i in range(n):
-    a1, b1, c1 = max_arr
-    a2, b2, c2 = map(int, input().split())
+    OLD, NEW = NEW, OLD
+    a, b, c= map(int, input().split())
 
-    max_arr[0] = max(a1, b1) + a2
-    max_arr[1] = max(max(a1, b1), c1) + b2
-    max_arr[2] = max(b2, c2) + c2
+    max_arr[NEW][0] = max(max_arr[OLD][:2]) + a
+    max_arr[NEW][1] = max(max_arr[OLD]) + b
+    max_arr[NEW][2] = max(max_arr[OLD][1:]) + c
 
-    min_arr[0] = min(a1, b1) + a2
-    min_arr[1] = min(min(a1, b1), c1) + b2
-    min_arr[2] = min(b1, c1) + c2
+    min_arr[NEW][0] = min(min_arr[OLD][:2]) + a
+    min_arr[NEW][1] = min(min_arr[OLD]) + b
+    min_arr[NEW][2] = min(min_arr[OLD][1:]) + c
 
-print(max(max_arr), min(min_arr))
+print(max(max_arr[NEW]), min(min_arr[NEW]))
