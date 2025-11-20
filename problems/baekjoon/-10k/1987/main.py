@@ -1,36 +1,26 @@
-# 1987. 알파벳
-from collections import deque
-DIR = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+import sys
+input = sys.stdin.readline
 
-def str_to_num(x : str):
-    return ord(x) - ord('A')
+DIR = [(-1,0),(1,0),(0,-1),(0,1)]
 
-r, c = map(int, input().split())
-board = [list(map(str_to_num, input())) for _ in range(r)]
+R, C = map(int, input().split())
+board = [list(map(lambda x: ord(x)-65, input().strip())) for _ in range(R)]
 
-s = set()
-for i in range(r):
-    for j in range(c):
-        s.add(board[i][j])
-max_num = len(s)
+ans = 0
+stack = [(0, 0, 1 << board[0][0], 1)]
 
-result = 1
-q = deque([(0, 0, 1 << board[0][0])])
-while q:
-    y, x, value = q.popleft()
+while stack:
+    y, x, bit, depth = stack.pop()
+    if depth > ans:
+        ans = depth
 
     for dy, dx in DIR:
-        ny, nx = y + dy, x + dx
-        if not (0 <= ny < r and 0 <= nx < c):
-            continue
-        nv = 1 << board[ny][nx]
-        if value & nv != 0:
-            cnt = 0
-            for i in range(26):
-                if value & 1 << i != 0:
-                    cnt += 1
-            result = max(result, cnt)
-        else:
-            q.append((ny, nx, value | nv))
+        ny = y + dy
+        nx = x + dx
+        if 0 <= ny < R and 0 <= nx < C:
+            c = board[ny][nx]
+            mask = 1 << c
+            if not (bit & mask):
+                stack.append((ny, nx, bit | mask, depth + 1))
 
-print(result)
+print(ans)
