@@ -20,11 +20,12 @@ def print_grid():
     print()
 
 def process_1():
-    grid[-1] = fishes
+    for i in range(len(fishes)):
+        grid[-1][i] = fishes[i]
     h, w = 1, 1
     r_start = N - 1
     c_start = 0
-    while c_start+h+w < N:
+    while c_start+h+w-1 < N:
         # 영역 선택
         target = []
         for i in range(r_start, r_start - h, -1):
@@ -43,27 +44,59 @@ def process_1():
         h, w = w + 1, h
 
 def control():
-    
-    for r in range(N):
-        for c in range(N):
-            if grid[r][c] > 0:
+    d_fish = []
+    for y in range(N):
+        for x in range(N):
+            if grid[y][x] > 0:
+                diff = 0
+                for dy, dx in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    ny, nx = y + dy, x + dx
+                    if not (0 <= ny < N and 0 <= nx < N):
+                        continue
+                    if grid[ny][nx] == 0:
+                        continue
+                    share = abs(grid[y][x] - grid[ny][nx]) // 5
+                    diff += share if grid[y][x] < grid[ny][nx] else -share
+                d_fish.append((y, x, diff))
 
+    for y, x, d in d_fish:
+        grid[y][x] += d
 
 def serialize():
     idx = -1
-    for c in range(N-1, -1, -1):
+    for c in range(N):
         for r in range(N-1, -1, -1):
             if grid[r][c] > 0:
                 idx += 1
                 fishes[idx] = grid[r][c]
+                grid[r][c] = 0
 
 def process_2():
-    return
+    for i in range(len(fishes)):
+        grid[-1][i] = fishes[i]
+    
+    floating = []
+    for x in range(N//2):
+        floating.append((N-1, x))
 
-while ans < 1:
-    # if check():
-    #     print(ans)
-    #     break
+    oy, ox = floating[0]
+    dy, dx = -1, N-1
+    for y, x in floating:
+        ny, nx = 2*oy-y+dy, 2*ox-x+dx
+        grid[y][x], grid[ny][nx] = grid[ny][nx], grid[y][x]
+
+    floating.clear()
+    for y in [N-1, N-2]:
+        for x in range(N//2, 3*N//4):
+            floating.append((y, x))
+
+    oy, ox = floating[0]
+    dy, dx = -3, N//2-1
+    for y, x in floating:
+        ny, nx = 2*oy-y+dy, 2*ox-x+dx
+        grid[y][x], grid[ny][nx] = grid[ny][nx], grid[y][x]
+
+while not check():
     add()
     process_1()
     control()
@@ -72,3 +105,5 @@ while ans < 1:
     control()
     serialize()
     ans += 1
+
+print(ans)
