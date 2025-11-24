@@ -13,8 +13,9 @@ n = int(input())
 k = int(math.log2(n // 3))
 pattern = []
 pattern.append((1, [2**k]))
-for _ in range(k):
+for depth in range(k):
     next_pattern = []
+    start_point = 2**k - 2**depth
     for cnt, pos in pattern:
         prev_cnt, prev_pos = next_pattern[-1] if next_pattern else pattern[-1]
         next_cnt, next_pos = cnt * 2, []
