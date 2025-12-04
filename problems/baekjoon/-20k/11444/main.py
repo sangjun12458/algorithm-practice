@@ -4,31 +4,22 @@ sys.setrecursionlimit(10**6)
 DIVISOR = 1000000007
 n = int(input())
 
-arr = []
+def fibo(k):
+    def mul(a, b):        
+        ab00 = (a[0][0]*b[0][0] + a[0][1]*b[1][0]) % DIVISOR
+        ab01 = (a[0][0]*b[0][1] + a[0][1]*b[1][1]) % DIVISOR
+        ab10 = (a[1][0]*b[0][0] + a[1][1]*b[1][0]) % DIVISOR
+        ab11 = (a[1][0]*b[0][1] + a[1][1]*b[1][1]) % DIVISOR
+        return [[ab00, ab01], [ab10, ab11]]
 
-while n > 0:
-    if n % 2 == 0:
-        arr.append(n+1)
-        arr.append(n-1)
+    if k == 1:
+        m = [[1, 1], [1, 0]]
+        return m
+    elif k % 2 == 0:
+        half = fibo(k//2)
+        return mul(half, half)
     else:
-        arr.append(n//2+1)
-        arr.append(n//2)
-    n //= 2
-
-print(arr)
-print(len(arr))
-
-
-# for i in range(n - 1):
-#     a, b = b, (a+b)%DIVISOR
-
-def pibo(x):
-    if x == 0:
-        return 0
-    elif x == 1 or x == 2:
-        return 1
-    elif x % 2 == 0:
-        return pibo(x+1) - pibo(x-1)
-    else:
-        return (pibo(x//2)**2 + pibo(x//2+1)**2) % DIVISOR
+        m = [[1, 1], [1, 0]]
+        return mul(m, fibo(k - 1))
     
+print(fibo(n)[1][0])
