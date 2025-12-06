@@ -1,10 +1,6 @@
 #. 1918. 후위 표기식
 
-#x = input().strip()
-#x = 'A*(B+C)'
-x = 'A+B*C-D/E'
-x = 'A*(B+C)'
-x = 'A+(B*(C-D)/E)' 
+x = input().strip()
 
 def postfix(s):
     ns = ''
@@ -39,27 +35,23 @@ def postfix(s):
         if c in ['/', '*']:
             oper = c
         else:
-            new_arr.append(c)
             if oper:
+                new_arr[-1] = new_arr[-1] + c + oper
+                oper = ''
+            else:
                 new_arr.append(c)
-    print(arr)
-    #ns = ''.join(arr)
+
+    oper = ''
+    for c in new_arr:
+        if c in ['+', '-']:
+            oper = c
+        else:
+            ns += c
+            if oper:
+                ns += oper
+                oper = ''
+
     return ns
 
-# for c in x:        
-#     stack.append(c)
-#     if 'A' <= c <= 'Z':
-#         while stack:
-#             if stack[-1] == '(':
-#                 break
-#             y += stack.pop()
-#     elif c == ')':            
-#         while stack:
-#             if stack[-1] in ('(', ')'):
-#                 stack.pop()
-#             else:
-#                 y += stack.pop()
-
-print(x)
 y = postfix(x)
 print(y)
