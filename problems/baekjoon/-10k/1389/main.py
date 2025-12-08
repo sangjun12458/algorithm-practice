@@ -1,34 +1,34 @@
+# 1389. 케빈 베이컨의 6단계 법칙
 import sys
 from collections import deque
 input = sys.stdin.readline
 
 n, m = map(int, input().split())
-graph = [[] for _ in range(n+1)]
+fri = [[]*(n+1) for _ in range(n + 1)]
 
 for _ in range(m):
     a, b = map(int, input().split())
-    graph[a].append(b)
-    graph[b].append(a)
+    fri[a].append(b)
+    fri[b].append(a)
 
-def bfs(start):
+def BFS(start):
     visited = [-1] * (n+1)
     q = deque([start])
     visited[start] = 0
     while q:
         now = q.popleft()
-        for nxt in graph[now]:
+        for nxt in fri[now]:
             if visited[nxt] == -1:
                 visited[nxt] = visited[now] + 1
                 q.append(nxt)
-    return sum(visited[1:])  # 1~n까지 거리 합
+    return sum(visited[1:])
 
-answer = 0
-min_value = int(1e9)
-
+ans = 10**6
+min_v = 0
 for i in range(1, n+1):
-    result = bfs(i)
-    if result < min_value:
-        min_value = result
-        answer = i
+    result = BFS(i)
+    if result < ans:
+        ans = result
+        min_v = i
 
-print(answer)
+print(min_v)
