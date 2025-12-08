@@ -1,39 +1,37 @@
-# 별 찍기 - 11
+# 2448. 별 찍기 - 11
 import math
-tri = ["  *  ", " * * ", "*****"]
-
-def print_tri(cnt, pos):
-    for t in tri:
-        s = ""
-        for p in pos:
-            s += " "*(3*(p-1) - len(s)) + t
-        print(s)
+TRI = ["  *  ", " * * ", "*****"]
 
 n = int(input())
 k = int(math.log2(n // 3))
-pattern = []
-pattern.append((1, [2**k]))
-for depth in range(k):
-    next_pattern = []
-    start_point = 2**k - 2**depth
-    for cnt, pos in pattern:
-        prev_cnt, prev_pos = next_pattern[-1] if next_pattern else pattern[-1]
-        next_cnt, next_pos = cnt * 2, []
-        if next_cnt == prev_cnt:
-            for idx in range(len(prev_pos)):
-                next_pos.append(prev_pos[idx] + idx % 2 * 2 - 1)
-        elif next_cnt > prev_cnt:
-            for p in prev_pos:
-                next_pos.append(p - 1)
-                next_pos.append(p + 1)
-        else:
-            for p in pos:
-                next_pos.append()
-                next_pos.append()
-        next_pattern.append((next_cnt, next_pos))
-    pattern.extend(next_pattern)
 
-print(pattern)
+arr = []
 
-for cnt, pos in pattern:
-    print_tri(cnt, pos)
+def func(r, c, d):
+    if d == k:
+        arr.append((r, c, d))
+    else:
+        nd = d + 1
+        nr = r * 2
+        nc = c * 2
+        func(nr, nc+1, nd)
+        func(nr+1, nc, nd)
+        func(nr+1, nc+2, nd)
+
+func(0, 0, 0)
+
+grid = [[] for _ in range(2**k)]
+for r, c, _ in arr:
+    grid[r].append(c)
+
+answer = []
+
+for row in grid:
+    for i in range(3):
+        s = ""
+        for c in row:
+            s += (" "*(3*c) + TRI[i])[len(s):]
+        answer.append(s)
+
+for ans in answer:
+    print(ans + " "*(len(answer[-1])-len(ans)))
