@@ -1,59 +1,51 @@
 # 2473. 세 용액
+import sys
+input = sys.stdin.readline
 INF = 10**9
 
 N = int(input())
 solution = list(map(int, input().split()))
-
-# N = 5000
-# neg = [-10**9 + i for i in range(2498)]
-# mid = [-2, -1, 3]
-# pos = [10**9 - 2499 + i for i in range(2499)]
-# solution = neg + mid + pos
 solution.sort()
 
 best = INF * 3
-ans = (-1, -1, -1)
+answer = [0, 0, 0]
 
-while len(solution) >= 3:
-    s1 = solution.pop()
-    if s1 < 0:
-        total = s1 + solution[-1] + solution[-2]
-        if abs(total) < abs(best):
-            best = total
-            ans = (solution[-2], solution[-1], s1)
-            break
-    base = -s1//2
- 
-    #s2, s3 = -INF, INF
-    left, right = -1, len(solution)
-    #print(s1, left, right)
-    for idx, s in enumerate(solution):
-        if s > base:
-            right = idx
-            break
-        left = idx
-    
-    if left == -1:
-        total = s1 + solution[0] + solution[1]
-        if abs(total) < abs(best):
-            best = total
-            ans = (solution[0], solution[1], s1)
-    elif right == len(solution):
-        total = s1 + solution[-1] + solution[-2]
-        if abs(total) < abs(best):
-            best = total
-            ans = (solution[-2], solution[-1], s1)
-    else:
-        while left >= 0 and right < len(solution):
-            s2 = solution[left]
-            s3 = solution[right]
-            total = s1 + s2 + s3
-            if abs(total) < abs(best):
-                best = total
-                ans = (s2, s3, s1)
-            if abs(s2 - base) < abs(s3 - base):
-                left -= 1
-            else:
-                right += 1
+for i in range(N-2):
+    left = i + 1
+    right = N - 1
 
-print(*ans)
+    while left < right:
+        if solution[i] < 0 and solution[right] < 0:
+            total = solution[i] + solution[right-1] + solution[right]
+            abs_total = abs(total)
+            if abs_total < best:
+                best = abs_total
+                answer = [solution[i], solution[right-1], solution[right]]
+            break
+
+        if solution[i] > 0 and solution[left] > 0:
+            total = solution[left] + solution[left+1] + solution[i]
+            abs_total = abs(total)
+            if abs_total < best:
+                best = abs_total
+                answer = [solution[left], solution[left+1], solution[i]]
+            break
+
+        total = solution[i] + solution[left] + solution[right]
+        abs_total = abs(total)
+
+        if abs_total < best:
+            best = abs_total
+            answer = [solution[i], solution[left], solution[right]]
+
+        if total < 0:
+            left += 1
+        elif total > 0:
+            right -= 1
+        else:
+            answer.sort()
+            print(*answer)
+            sys.exit(0)
+
+answer.sort()
+print(*answer)
