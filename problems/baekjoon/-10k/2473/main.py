@@ -10,33 +10,29 @@ solution.sort()
 best = INF * 3
 answer = [0, 0, 0]
 
+def update(a, b, c):
+    global best, answer
+    total = a + b + c
+    abs_total = abs(total)
+    if abs_total < best:
+        best = abs_total
+        answer = [a, b ,c]
+    return total
+
 for i in range(N-2):
     left = i + 1
     right = N - 1
 
     while left < right:
         if solution[i] < 0 and solution[right] < 0:
-            total = solution[i] + solution[right-1] + solution[right]
-            abs_total = abs(total)
-            if abs_total < best:
-                best = abs_total
-                answer = [solution[i], solution[right-1], solution[right]]
+            _ = update(solution[i], solution[right-1], solution[right])
             break
 
         if solution[i] > 0 and solution[left] > 0:
-            total = solution[left] + solution[left+1] + solution[i]
-            abs_total = abs(total)
-            if abs_total < best:
-                best = abs_total
-                answer = [solution[left], solution[left+1], solution[i]]
+            _ = update(solution[i], solution[left], solution[left+1])
             break
 
-        total = solution[i] + solution[left] + solution[right]
-        abs_total = abs(total)
-
-        if abs_total < best:
-            best = abs_total
-            answer = [solution[i], solution[left], solution[right]]
+        total = update(solution[i], solution[left], solution[right])
 
         if total < 0:
             left += 1
