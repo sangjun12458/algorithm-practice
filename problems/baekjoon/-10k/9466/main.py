@@ -8,12 +8,27 @@ for _ in range(T):
     student = [0] + list(map(int, input().split()))
 
     state = [0] * (n+1)
-    for i in range(1, n+1):
-        start = state[i]
-        if start == 2 or start == 3:
-            continue
+    position = [0] * (n+1)
+    turn = 0
+    answer = 0
 
-        now = student[start]
-        while now == 0:
-            
-            now = 1
+    for start in range(1, n+1):
+        now = start
+        if state[now] != 0:
+            continue
+        
+        turn += 1
+        state[now] = turn
+        position[now] = 1
+
+        while state[student[now]] == 0:
+            position[student[now]] = position[now] + 1
+            now = student[now]
+            state[now] = turn
+
+        if state[student[now]] == turn:
+            answer += position[student[now]] - 1
+        else:
+            answer += position[now]
+
+    print(answer)
