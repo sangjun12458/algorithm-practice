@@ -7,15 +7,36 @@ N, M = map(int, input().split())
 dirs = [input().strip() for _ in range(N)]
 
 group = [[0] * M for _ in range(N)]
+parent = [0]
+
+def find_root(x):
+    if parent[x] == x:
+        return x
+    else:
+        return find_root(parent[x])
+
+def union(a, b):
+    r1 = find_root(a)
+    r2 = find_root(b)
+    if r1 < r2:
+        parent[r2] = r1
+    else:
+        parent[r1] = r2
 
 cnt = 0
 for i in range(N):
     for j in range(M):
         if group[i][j] != 0: continue
+        r, c = i, j
         cnt += 1
-        group[i][j] = cnt
+        parent.append(cnt)
+        while group[r][c] == 0:
+            group[r][c] = cnt
+            dr, dc = delta[dirs[r][c]]
+            r, c = r + dr, c + dc
+        union(cnt, group[r][c])
 
-        now = (i, j)
-        dir = dirs[i][j]
-        new = delta[dir]
-
+s = set()
+for p in parent[1:]:
+    s.add(p)
+print(len(s))
