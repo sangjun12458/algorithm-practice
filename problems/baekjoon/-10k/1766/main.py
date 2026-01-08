@@ -1,8 +1,33 @@
 # 1766. 문제집
 import sys
+import heapq
+
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-seq = [list(map(int, input().split())) for _ in range(M)]
 
-print(seq)
+graph = [[] for _ in range(N+1)]
+indegree = [0] * (N+1)
+
+for _ in range(M):
+    A, B = map(int, input().split())
+    graph[A].append(B)
+    indegree[B] += 1
+
+heap = []
+for i in range(1, N+1):
+    if indegree[i] == 0:
+        heapq.heappush(heap, i)
+
+answer = []
+
+while heap:
+    cur = heapq.heappop(heap)
+    answer.append(cur)
+
+    for nxt in graph[cur]:
+        indegree[nxt] -= 1
+        if indegree[nxt] == 0:
+            heapq.heappush(heap, nxt)
+
+print(*answer)
