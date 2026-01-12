@@ -13,6 +13,8 @@ for i in range(1, p+1):
             gates[gate] = True
             docking = True
             break
+
     if not docking:
-        print(gates.count(True))
         break
+
+print(gates.count(True))
