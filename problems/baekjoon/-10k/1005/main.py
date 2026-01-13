@@ -1,6 +1,7 @@
 # 1005. ACM Craft
 import sys
-from collections import deque
+import heapq
+
 input = sys.stdin.readline
 
 T = int(input())
@@ -8,29 +9,28 @@ T = int(input())
 for _ in range(T):
     N, K = map(int, input().split())
     time = [0] + list(map(int, input().split()))
-    seq = [[] for _ in range(N+1)]
+    graph = [[] for _ in range(N+1)]
+    phase = [0] * (N+1)
     for _ in range(K):
         X, Y = map(int, input().split())
-        seq[X].append(Y)
+        graph[X].append(Y)
+        phase[Y] += 1
     W = int(input())
 
-    start = [True] * (N+1) 
-    start[0] = False
-    for A, Bs in enumerate(seq):
-        for B in Bs:
-            start[B] = False
+    heap = []
+    total = [0] * (N+1)
+    for i in range(1, N+1):
+        if phase[i] == 0:
+            heapq.heappush(heap, i)
+    while heap:
+        now = heapq.heappop(heap)
+        total[now] += time[now]
+        if now == W:
+            break
+        for new in graph[now]:
+            phase[new] -= 1
+            if phase[new] == 0:
+                heapq.heappush(heap, new)
+            total[new] = max(total[new], total[now])
 
-    q = deque()
-    total_time = [0] * (N+1)
-    for num, canStart in enumerate(start):
-        if canStart:
-            q.append(num)
-            total_time[num] = time[num]
-
-    while q:
-        now = q.popleft()
-        for new in seq[now]:
-            total_time[new] = max(total_time[new], total_time[now] + time[new])
-            q.append(new)
-        
-    print(total_time[W])
+    print(total[W])
