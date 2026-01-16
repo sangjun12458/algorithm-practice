@@ -8,5 +8,6 @@ for _ in range(M):
     friend[a].append(b)
     friend[b].append(a)
 
+
 print(candy)
 print(friend)

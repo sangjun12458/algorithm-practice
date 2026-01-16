@@ -1,0 +1,13 @@
+python -m venv venv
+
+venv\Scripts\activate
+
+which python
+python --version
+
+pip install --upgrade pip
+pip install trafilatura newspaper3k readability-lxml
+pip freeze > requirements.txt
+
+deactivate
+rm -rf venv
