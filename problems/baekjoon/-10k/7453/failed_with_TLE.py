@@ -1,49 +1,24 @@
 # 7453. 합이 0인 네 정수
+import sys
+input = sys.stdin.readline
 
 n = int(input()) # 1 <= n <= 4000, n**4 <= 256e12
-A, B, C, D = [], [], [], []
+A, B, C, D = dict(), dict(), dict(), dict()
 for _ in range(n):
     a, b, c, d = map(int, input().split())
-    A.append(a)
-    B.append(b)
-    C.append(c)
-    D.append(d)
+    A[a] = A.get(a, 0) + 1
+    B[b] = B.get(b, 0) + 1
+    C[c] = C.get(c, 0) + 1
+    D[d] = D.get(d, 0) + 1
 
-AB = []
-CD = []
-for x in A:
-    for y in B:
-        AB.append(x + y)
-for x in C:
-    for y in D:
-        CD.append(x + y)
-AB.sort()
-CD.sort()
+AB = dict()
+for k1 in A:
+    for k2 in B:
+        AB[k1+k2] = AB.get(k1+k2, 0) + A[k1]*B[k2]
 
-arr1, arr2 = [[AB[0], 1]], [[CD[0], 1]]
-for x in AB[1:]:
-    if arr1[-1][0] == x:
-        arr1[-1][1] += 1
-    else:
-        arr1.append([x, 1])
-for x in CD[1:]:
-    if arr2[-1][0] == x:
-        arr2[-1][1] += 1
-    else:
-        arr2.append([x, 1])
-
-p1, p2 = 0, len(arr2) - 1
 ans = 0
-while p1 < len(arr1) and p2 >= 0:
-    x = arr1[p1][0]
-    y = arr2[p2][0]
-
-    if x + y == 0:
-        ans += arr1[p1][1] * arr2[p2][1]
-
-    if x + y < 0:
-        p1 += 1
-    else:
-        p2 -= 1
+for k1 in C:
+    for k2 in D:
+        ans += AB.get(-k1-k2, 0)*C[k1]*D[k2]
 
 print(ans)
