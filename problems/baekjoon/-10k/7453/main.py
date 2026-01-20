@@ -3,7 +3,7 @@ import sys
 input = sys.stdin.readline
 from collections import Counter
 
-n = int(input()) # 1 <= n <= 4000, n**4 <= 256e12
+n = int(input()) # 1 <= n <= 4000
 arr = [[] for _ in range(4)]
 for _ in range(n):
     row = tuple(map(int, input().split()))

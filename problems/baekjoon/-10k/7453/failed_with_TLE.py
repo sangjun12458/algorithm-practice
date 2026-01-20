@@ -2,7 +2,7 @@
 import sys
 input = sys.stdin.readline
 
-n = int(input()) # 1 <= n <= 4000, n**4 <= 256e12
+n = int(input()) # 1 <= n <= 4000
 A, B, C, D = dict(), dict(), dict(), dict()
 for _ in range(n):
     a, b, c, d = map(int, input().split())
@@ -12,13 +12,13 @@ for _ in range(n):
     D[d] = D.get(d, 0) + 1
 
 AB = dict()
-for k1 in A:
-    for k2 in B:
-        AB[k1+k2] = AB.get(k1+k2, 0) + A[k1]*B[k2]
+for a, ca in A.items():
+    for b, cb in B.items():
+        AB[a+b] = AB.get(a+b, 0) + ca * cb
 
 ans = 0
-for k1 in C:
-    for k2 in D:
-        ans += AB.get(-k1-k2, 0)*C[k1]*D[k2]
+for c, cc in C.items():
+    for d, cd in D.items():
+        ans += AB.get(-c-d, 0) * cc * cd
 
 print(ans)
