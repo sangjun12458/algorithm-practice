@@ -1,20 +1,25 @@
 # 10775. 공항
+import sys
+import heapq
+input = sys.stdin.readline
 
 g = int(input().strip())
 p = int(input().strip())
-
-gates = [False] * (g + 1)
-
+planes_in_gate = [[] for _ in range(g+1)]
 for i in range(1, p+1):
-    gi = int(input().strip())
-    docking = False
-    for gate in range(gi, 0, -1):
-        if not gates[gate]:
-            gates[gate] = True
-            docking = True
-            break
+    planes_in_gate[int(input().strip())].append(i)
 
-    if not docking:
-        break
+pq = []
+ans = p
+for gate in range(1, g+1):
+    for plane in planes_in_gate[gate]:
+        if gate > len(pq):
+            heapq.heappush(pq, -plane)
+        else:
+            if plane < -pq[0]:
+                ans = min(ans, -heapq.heappop(pq)-1)
+                heapq.heappush(pq, -plane)
+            else:
+                ans = min(ans, plane-1)
 
-print(gates.count(True))
+print(ans)
