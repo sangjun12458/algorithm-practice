@@ -6,4 +6,7 @@ for _ in range(N):
     map_for_dice.append(list(map(int, input().split())))
 seq = list(map(int, input().split()))
 
+for move in seq:
+    pass
+
 print(map_for_dice)
