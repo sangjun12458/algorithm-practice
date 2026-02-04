@@ -7,5 +7,8 @@ for _ in range(K):
     r, c = map(int, input().split())
     board[r][c] = 1
 L = int(input())
+insts = [''] * 10001
 for _ in range(L):
     X, C = input().split()
+    insts[int(X)] = C
+
