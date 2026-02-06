@@ -19,16 +19,10 @@ for _ in range(L):
 
 head = (0, 0, RIGHT)
 board[head[0]][head[1]] = -1
-body = deque() # list -> linked list
+body = deque()
 game_over = False
 tick = 0
 while not game_over:
-    # print()
-    # print(tick)
-    # for row in board:
-    #     print(row)
-    # print()
-
     tick += 1
     if tick > N + MAX_LEN:
         game_over = True
@@ -44,10 +38,7 @@ while not game_over:
     head = (nx, ny, (d+rots[tick])%4)
     body.appendleft((x, y))
     if board[nx][ny] == -1:
-        tx, ty = body.pop()
-        board[tx][ty] = 0
-        if board[nx][ny] == -1:
-            game_over = True
+        game_over = True
     else:
         if board[nx][ny] == 0:
             tx, ty = body.pop()
