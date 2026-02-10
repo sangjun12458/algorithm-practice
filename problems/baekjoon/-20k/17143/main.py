@@ -10,15 +10,15 @@ catched = [False] * 10001
 
 for i in range(M):
     r, c, s, d, z = map(int, input().split())
-    board[r][c] = i
-    sharks.append((r, c, s, d, z))
+    board[r-1][c-1] = i
+    sharks.append((r-1, c-1, s, d, z))
 
 ans = 0
-for fisher in range(1, C+1):
+for fisher in range(C):
     # catch a shark
-    for row in range(1, R+1):
+    for row in range(R):
         shark_idx = board[row][fisher]
-        if shark_idx != -1 and not catched:
+        if shark_idx != -1 and not catched[shark_idx]:
             ans += sharks[shark_idx][4]
             catched[shark_idx] = True
             board[row][fisher] = -1
@@ -26,21 +26,20 @@ for fisher in range(1, C+1):
 
     # sharks move
     for idx, (r, c, s, d, z) in enumerate(sharks):
+        if catched[idx]: continue
         # need to calculate next pos
         dr, dc = DIR[d]
         nr, nc = r + s*dr, c + s*dc
         nd = d
-        if not (0 < nr <= R):
+        if not (0 <= nr < R):
             nr = 2 * R - nr if nr > R else -nr
             nd = (d + 1) % 2 + 1
-        if not (0 < nc <= C):
+        if not (0 <= nc < C):
             nc = 2 * C - nc if nc > C else -nc
             nd = (d + 1) % 2 + 3
-            print(nr, nc)
-        # check direction
         sharks[idx] = (nr, nc, s, nd, z)
-        if board[r][c] == idx:
-            board[r][c] = -1
+    
+        board[r][c] = -1
         if board[nr][nc] != -1:
             other_idx = board[nr][nc]
             other_z = sharks[other_idx][4]
@@ -49,5 +48,7 @@ for fisher in range(1, C+1):
                 catched[other_idx] = True
             else:
                 catched[idx] = True
+        else:
+            board[nr][nc] = idx
 
 print(ans)
