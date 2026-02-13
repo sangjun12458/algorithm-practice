@@ -15,10 +15,6 @@ for i in range(M):
 
 ans = 0
 for fisher in range(C):
-    print()
-    for row in board:
-        print(row)
-
     # catch a shark
     for row in range(R):
         shark_idx = board[row][fisher]
@@ -28,21 +24,35 @@ for fisher in range(C):
             board[row][fisher] = -1
             break
 
+    next_pos = [[] for _ in range] # 이전 위치, 새로운 위치 모두 구한 후 갱신
     # sharks move
     for idx, (r, c, s, d, z) in enumerate(sharks):
         if catched[idx]: continue
         dr, dc = DIR[d]
-        dr = (s * dr) % (2 * (R-1))
-        dc = (s * dc) % (2 * (C-1))
 
-        nr, nc = r + s*dr, c + s*dc
-        nd = d
-        if not (0 <= nr < R):
-            nr = 2 * R - nr - 2 if nr >= R else -nr
-            nd = (d + 1) % 2 + 1
-        if not (0 <= nc < C):
-            nc = 2 * C - nc - 2 if nc >= C else -nc
-            nd = (d + 1) % 2 + 3
+        if d == 1:
+            nr = 2 * R - 2 - r - s*dr
+        else:
+            nr = r + s*dr
+        if d == 4:
+            nc = 2 * C - 2 - c - s*dc
+        else:
+            nc = c + s*dc
+        if d == 1 or d == 2:
+            if nr // (R - 1) % 2 == 0:
+                nr %= (R - 1)
+                nd = 2
+            else:
+                nr = R - 1 - (nr % (R - 1))
+                nd = 1
+        else:
+            if nc // (C - 1) % 2 == 0:
+                nc %= (C - 1)
+                nd = 3
+            else:
+                nc = C - 1 - (nc % (C - 1))
+                nd = 4
+
         sharks[idx] = (nr, nc, s, nd, z)
     
         board[r][c] = -1
