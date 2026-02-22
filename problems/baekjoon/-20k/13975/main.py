@@ -8,6 +8,7 @@ t = int(input().strip())
 for _ in range(t):
     k = int(input().strip())
     chapters = list(map(int, input().split()))
+    sides = [[i, i] for i in range(k)]
     result = 0
 
     files = []
@@ -15,11 +16,15 @@ for _ in range(t):
         heapq.heappush(files, (chapters[i] + chapters[i+1], i, i+1))
         
     for _ in range(k-1):
-        cost, start, end = heapq.heappop(files)
+        cost, left, right = heapq.heappop(files)
+        start, end = sides[left][0], sides[right][1]
         while cost != chapters[start] + chapters[end]:
             heapq.heappush(files, (chapters[start] + chapters[end], start, end))
-            cost, start, end = heapq.heappop(files)
+            cost, left, right = heapq.heappop(files)
+            start, end = sides[left][0], sides[right][1]
         result += cost
         chapters[start] = chapters[end] = cost
+        sides[start][1] = end
+        sides[end][0] = start
 
     print(result)
