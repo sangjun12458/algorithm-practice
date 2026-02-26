@@ -14,24 +14,25 @@ for i in range(N):
             continue
         h = arr[i][ramp[0]]
         nh = arr[i][j]
-        if nh == h:
+
+        if nh == h + 1:
+            if len(ramp) == L:
+                ramp.clear()
+                ramp.append(j)
+            else:
+                passable = False
+                break
+        elif nh == h:
             ramp.append(j)
             if len(ramp) > L:
                 ramp.popleft()
-        elif nh > h:
-            if nh + 1 == h and len(ramp) == L:
-                ramp.clear()
-                ramp.append(j)
-            else:
-                passable = False
-                break
+        elif nh == h - 1:
+            ramp.clear()
+            ramp.append(j)
         else:
-            if nh - 1 == h:
-                ramp.clear()
-                ramp.append(j)
-            else:
-                passable = False
-                break
+            passable = False
+            break
+
     if passable:
         print(arr[i])
         answer += 1
