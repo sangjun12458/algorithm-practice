@@ -3,70 +3,54 @@ N, L = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 answer = 0
 
+col_ramps = [[0, True]] * N     # length, passablity
 for i in range(N):
-    ramp_h = arr[i][0]
-    ramp_l = 1
-    passable = True
-    for j in range(1, N):
+    row_ramp = [0, True]
+    for j in range(N):
         h = arr[i][j]
-        if h + 1 == ramp_h:
-            if ramp_l >= 0:
-                ramp_h = h
-                ramp_l = 1 - L
+
+        if j > 0:
+            row_h = arr[i][j-1]
+            if h == row_h - 1:
+                if row_ramp[0] < 0:
+                    row_ramp[1] = False
+                else:
+                    row_ramp[0] = 1 - L
+            elif row_h == row_h:
+                row_ramp[0] += 1
+            elif row_h == row_h + 1:
+                if row_ramp[0] < L: 
+                    row_ramp[1] = False
+                else:
+                    row_ramp[0] = 1
             else:
-                passable = False
-                break
-        elif h == ramp_h:
-            ramp_l += 1
-        elif h - 1 == ramp_h:
-            if ramp_l >= L:
-                ramp_l = 1
-                ramp_h = h
+                row_ramp[1] = False
+   
+        if i > 0:
+            col_h = arr[i-1][j]
+            if h == col_h - 1:
+                if col_ramps[j][0] < 0:
+                    col_ramps[j][1] = False
+                else:
+                    col_ramps[j][0] = 1 - L
+            elif h == col_h:
+                col_ramps[j][0] += 1
+            elif h == col_h + 1:
+                if col_ramps[j][0] < L:
+                    col_ramps[j][1] = False
+                else:
+                    col_ramps[j][0] = 1
             else:
-                passable = False
-                break
-        else:
-            passable = False
-            break
-    if ramp_l < 0:
+                col_ramps[j][1] = False
+
+    if row_ramp[0] < 0:
         passable = False
 
-    if passable:
-        # print(arr[i])
+    if row_ramp[1]:
         answer += 1
 
-for j in range(N):
-    ramp_h = arr[0][j]
-    ramp_l = 1
-    passable = True
-    for i in range(1, N):
-        h = arr[i][j]
-        if h + 1 == ramp_h:
-            if ramp_l >= 0:
-                ramp_h = h
-                ramp_l = 1 - L
-            else:
-                passable = False
-                break
-        elif h == ramp_h:
-            ramp_l += 1
-        elif h - 1 == ramp_h:
-            if ramp_l >= L:
-                ramp_l = 1
-                ramp_h = h
-            else:
-                passable = False
-                break
-        else:
-            passable = False
-            break
-    if ramp_l < 0:
-        passable = False
-
-    if passable:
-        # print()
-        # for row in arr:
-        #     print(row[j])
+for length, passablity in col_ramps:
+    if length >= 0 and passablity:
         answer += 1
 
 print(answer)
