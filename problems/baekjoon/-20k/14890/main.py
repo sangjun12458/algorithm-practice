@@ -3,9 +3,9 @@ N, L = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 answer = 0
 
-col_ramps = [[0, True]] * N     # length, passablity
+col_ramps = [[1, True] for _ in range(N)]     # length, passablity
 for i in range(N):
-    row_ramp = [0, True]
+    row_ramp = [1, True]
     for j in range(N):
         h = arr[i][j]
 
@@ -16,9 +16,9 @@ for i in range(N):
                     row_ramp[1] = False
                 else:
                     row_ramp[0] = 1 - L
-            elif row_h == row_h:
+            elif h == row_h:
                 row_ramp[0] += 1
-            elif row_h == row_h + 1:
+            elif h == row_h + 1:
                 if row_ramp[0] < L: 
                     row_ramp[1] = False
                 else:
@@ -43,14 +43,11 @@ for i in range(N):
             else:
                 col_ramps[j][1] = False
 
-    if row_ramp[0] < 0:
-        passable = False
-
-    if row_ramp[1]:
+    if row_ramp[0] >= 0 and row_ramp[1]:
         answer += 1
 
-for length, passablity in col_ramps:
-    if length >= 0 and passablity:
+for length, passable in col_ramps:
+    if length >= 0 and passable:
         answer += 1
 
 print(answer)
