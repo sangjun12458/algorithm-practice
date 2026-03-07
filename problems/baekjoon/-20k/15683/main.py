@@ -1,7 +1,6 @@
 # 15683. 감시
 import copy
 DIR = ((-1, 0), (0, -1), (1, 0), (0, 1))
-# TYPE = {1: [0, 1, 2, 3], 2: [0, 2], 3: [0, 1], 4: [0, 1, 2], 5: [0, 1, 2, 3]}
 
 class cctv:
     def __init__(self, t, r, c, d):
@@ -38,9 +37,7 @@ def dfs(depth):
                         break
                     nr += dr
                     nc += dc
-        # print()
-        # for row in board:
-        #     print(row)
+
         cnt = 0
         for row in board:
             cnt += row.count(0)
