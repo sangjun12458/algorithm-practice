@@ -10,12 +10,15 @@ for _ in range(N):
     curves = [(y, x), (y + dy, x + dx)]
 
     # 세대 커브 구현
+    oy, ox = curves[-1]
     for _ in range(g):
         l = len(curves)
-        oy, ox = curves[-1]
         for i in range(l):
             py, px = curves[i]
             # 기준점에 대해 회전
+            py -= oy
+            px -= ox
+            
             curves.append((py, px))
 
     for y, x in curves:
