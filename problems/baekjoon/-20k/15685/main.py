@@ -10,27 +10,30 @@ for _ in range(N):
     curves = [(y, x), (y + dy, x + dx)]
 
     # 세대 커브 구현
-    oy, ox = curves[-1]
     for _ in range(g):
+        er, ec = curves[-1]
         l = len(curves)
-        for i in range(l):
-            py, px = curves[i]
+        for i in range(l-2, -1, -1):
+            pr, pc = curves[i]
             # 기준점에 대해 회전
-            py -= oy
-            px -= ox
-            
-            curves.append((py, px))
+            dr, dc = er - ec, er + ec
+            nr, nc = pc + dr, -pr + dc
+            if 0 <= nr < 100 and 0 <= nc < 100:
+                curves.append((nr, nc))
+            else:
+                break
 
+    # print(curves)
     for y, x in curves:
         grid[y][x] = 1
     
-    for row in grid[:10]:
-        print(row[:10])
-    print()
+    # for row in grid[:10]:
+    #     print(row[:10])
+    # print()
 
 answer = 0
 for i in range(100):
     for j in range(100):
-        if grid[i][j] == grid[i][j+1] == grid[i+1][j] == grid[i+1][j+1]:
+        if grid[i][j] == grid[i][j+1] == grid[i+1][j] == grid[i+1][j+1] == 1:
             answer += 1
 print(answer)
