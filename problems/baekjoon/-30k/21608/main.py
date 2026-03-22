@@ -12,24 +12,33 @@ for _ in range(N*N):
 
 seats = [[0] * N for _ in range(N)]
 for x in order:
-    r, c, satisfaction = 0, 0, 0
+    r, c, preference, empty_cnt = 0, 0, 0, 0
     for i in range(N):
         for j in range(N):
             if seats[i][j]:
                 continue
-            cnt = 0
+            new_p_cnt = 0
+            new_e_cnt = 0
             for di, dj in ((0, 1), (0, -1), (1, 0), (-1, 0)):
                 ni, nj = i + di, j + dj
                 if not (0 <= ni < N and 0 <= nj < N):
                     continue
                 if seats[ni][nj] in preferred[x]:
-                    cnt += 1
-            if cnt > satisfaction or seats[r][c]:
-                r, c, satisfaction = i, j, cnt
+                    new_p_cnt += 1
+                elif not seats[ni][nj]:
+                    new_e_cnt += 1
+            if seats[r][c]:
+                r, c, preference, empty_cnt = i, j, new_p_cnt, new_e_cnt
+                continue
+            if new_p_cnt < preference:
+                continue
+            elif new_p_cnt > preference:
+                r, c, preference, empty_cnt = i, j, new_p_cnt, new_e_cnt
+                continue
+            if new_e_cnt > empty_cnt:
+                r, c, preference, empty_cnt = i, j, new_p_cnt, new_e_cnt
     seats[r][c] = x
 
-for row in seats:
-    print(row)
 answer = 0
 for i in range(N):
     for j in range(N):
@@ -43,5 +52,4 @@ for i in range(N):
                 cnt += 1
         if cnt > 0:
             answer += (10 ** (cnt-1))
-        print(answer)
 print(answer)
