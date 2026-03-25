@@ -23,6 +23,7 @@ def set_board():
 def dfs(depth, score):
     global answer, piece
     if depth >= 10: # 종료 조건
+        print(piece)
         answer = max(answer, score)
         return    
     if score + 40 * (10-depth) <= answer: # 가지치기
