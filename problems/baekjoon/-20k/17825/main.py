@@ -6,6 +6,7 @@ dice = tuple(map(int, input().split()))
 board = []
 piece = [0, 0, 0, 0]
 answer = 0
+movable = [True] * 4
 
 def set_board():
     global board
@@ -23,7 +24,6 @@ def set_board():
 def dfs(depth, score):
     global answer, piece
     if depth >= 10: # 종료 조건
-        print(piece)
         answer = max(answer, score)
         return    
     if score + 40 * (10-depth) <= answer: # 가지치기
@@ -31,29 +31,28 @@ def dfs(depth, score):
     for i in range(4):
         if piece[i] == -1:
             continue
-        # 다른 말과 같은 위치이면 선택하지 않도록 구현 필요
-        keep = True
-        for j in range(i):
-            if piece[j] == piece[i]:
-                keep = False
-        if not keep:
-            continue
-        # 파란칸 이동 구현 필요
-        prev_pos = piece[i]
-        cnt = 0
-        while piece[i] != -1 and cnt < dice[depth]:
-            if cnt == 0 and len(board[piece[i]][1]) == 2:
-                piece[i] = board[piece[i]][1][1]
-            else:
-                piece[i] = board[piece[i]][1][0]
+        # 움직일 위치 계산 + 파란색 칸 고려
+        init_pos = piece[i]
+        pos = board[init_pos][1][-1]
+        cnt = 1
+        while pos != -1 and cnt < dice[depth]:
+            pos = board[pos][1][0]
             cnt += 1
-        if piece[i] == -1:
+        # 다른 말과 같은 위치이면 선택하지 않도록 구현
+        keep = True
+        for j in range(4):
+            if i != j and pos == piece[j]:
+                keep = False
+        if not keep and pos != -1:
+            continue
+        # 도착 여부에 따라 구분
+        piece[i] = pos
+        if pos == -1:
             dfs(depth+1, score)
         else:
-            dfs(depth+1, score + board[piece[i]][0])
-        piece[i] = prev_pos
+            dfs(depth+1, score + board[pos][0])
+        piece[i] = init_pos
 
 set_board()
-print(board)
 dfs(0, 0)
 print(answer)
