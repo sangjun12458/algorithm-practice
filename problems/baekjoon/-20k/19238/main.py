@@ -3,8 +3,8 @@ DIR = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 N, M, gas = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
-taxi = list(map(int, input().split()))
-customer = [list(map(int, input().split())) + [False] for _ in range(M)]
+taxi = list(map(lambda x: int(x)-1, input().split()))
+customer = [list(map(lambda x: int(x)-1, input().split())) + [False] for _ in range(M)]
 
 dist = [[-1] * (N*N) for _ in range(N*N)]
 for i in range(N):
@@ -35,11 +35,21 @@ for _ in range(M):
         if proccessed:
             continue
         d = dist[taxi[0]*N+taxi[1]][r*N+c]
+        if d == -1:
+            continue
         if d < best_d:
             best_d = d
             target = i
-    
+    if target == -1:
+        gas = -1
+        break
     # 출발지에서 목적지까지 최단거리 + 가지 못하거나 연료가 없으면 종료
+    sr, sc, er, ec, _ = customer[target]
+    gas_used = dist[sr*N+sc][er*N+ec]
+    if gas < gas_used:
+        gas = -1
+        break
     # 연료 충전 
-    pass
+    gas += gas_used
 
+print(gas)
