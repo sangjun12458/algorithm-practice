@@ -49,7 +49,7 @@ for _ in range(M):
     if gas < gas_used:
         gas = -1
         break
-    # 연료 충전 
     gas += gas_used
+    taxi = [er, ec]
 
 print(gas)
