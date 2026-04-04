@@ -30,26 +30,33 @@ for i in range(N):
 for _ in range(M):
     # 택시로부터 최단거리 승객 찾기 + 찾을 수 없으면 종료
     target, best_d = -1, 1000
+    print(customer)
     for i in range(M):
         r, c, _, _, proccessed = customer[i]
         if proccessed:
             continue
+        print(taxi, r, c)
+        print(arr[taxi[0]][taxi[1]], arr[r][c])
         d = dist[taxi[0]*N+taxi[1]][r*N+c]
+        print(d)
         if d == -1:
             continue
         if d < best_d:
             best_d = d
             target = i
+
     if target == -1:
         gas = -1
         break
     # 출발지에서 목적지까지 최단거리 + 가지 못하거나 연료가 없으면 종료
     sr, sc, er, ec, _ = customer[target]
+    gas -= best_d
     gas_used = dist[sr*N+sc][er*N+ec]
     if gas < gas_used:
         gas = -1
         break
     gas += gas_used
     taxi = [er, ec]
+    customer[target][4] = True
 
 print(gas)
