@@ -3,9 +3,8 @@ DIR = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
 N, M, gas = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
-taxi_r, taxi_c = map(lambda x: int(x)-1, input().split())
-customer = [list(map(lambda x: int(x)-1, input().split()))]
-proccessed = [False] * N
+taxi = list(map(lambda x: int(x)-1, input().split()))
+customer = [list(map(lambda x: int(x)-1, input().split())) + [False] for _ in range(M)]
 
 dist = [[-1] * (N*N) for _ in range(N*N)]
 for i in range(N):
@@ -31,24 +30,14 @@ for i in range(N):
 for _ in range(M):
     # 택시로부터 최단거리 승객 찾기 + 찾을 수 없으면 종료
     target, best_d = -1, 1000
+    print(customer)
     for i in range(M):
-        if proccessed[i]:
+        r, c, _, _, proccessed = customer[i]
+        if proccessed:
             continue
-        customer_r, customer_c, _, _ = customer[i]
-        visited = [[False] * N for _ in range(N)]
-        q = [(taxi_r, taxi_c, 0)]
-        while q:
-            r, c, d = q.pop()
-            if r == customer_r and c == customer_c:
-                break
-            if visited[r][c]:
-                continue
-            visited[r][c] = True
-            for dr, dc in DIR:
-                nr, nc = r + dr, c + dc
-                if 0 <= nr < N and 0 <= nc < N:
-                    q.append((nr, nc, d + 1))
-
+        print(taxi, r, c)
+        print(arr[taxi[0]][taxi[1]], arr[r][c])
+        d = dist[taxi[0]*N+taxi[1]][r*N+c]
         print(d)
         if d == -1:
             continue
