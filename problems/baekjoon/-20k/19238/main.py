@@ -40,7 +40,9 @@ for _ in range(M):
         while q:
             r, c, d = q.pop()
             if r == customer_r and c == customer_c:
-                break
+                if d < best_d:
+                    best_d = d
+                    target = i
             if visited[r][c]:
                 continue
             visited[r][c] = True
@@ -48,13 +50,6 @@ for _ in range(M):
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < N and 0 <= nc < N:
                     q.append((nr, nc, d + 1))
-
-        print(d)
-        if d == -1:
-            continue
-        if d < best_d:
-            best_d = d
-            target = i
 
     if target == -1:
         gas = -1
