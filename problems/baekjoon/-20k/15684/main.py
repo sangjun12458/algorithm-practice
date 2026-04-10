@@ -17,6 +17,7 @@ def dfs(depth, r, c):
     global answer, ladder
     if depth > 3:
         return
+
     if check():
         answer = min(depth, answer)
         return
