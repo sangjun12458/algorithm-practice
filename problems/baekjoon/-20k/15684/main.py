@@ -6,8 +6,7 @@ def check():
         col = i
         row = 0
         while row < H:
-            if ladder[row][col] != 0:
-                col += ladder[row][col]
+            col += ladder[row][col]
             row += 1
         if col != i:
             return False
