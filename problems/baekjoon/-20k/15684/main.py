@@ -2,6 +2,7 @@
 
 def check():
     global ladder
+    cnt = 0
     for i in range(N):
         col = i
         row = 0
@@ -9,16 +10,18 @@ def check():
             col += ladder[row][col]
             row += 1
         if col != i:
-            return False
-    return True
+            cnt += 1
+    return cnt
 
 def dfs(depth, r, c):
     global answer, ladder
     if depth > 3:
         return
-
-    if check():
+    cnt = check()
+    if cnt == 0:
         answer = min(depth, answer)
+        return
+    if (3-depth) * 2 < cnt:
         return
     for i in range(r, H):
         for j in range(N-1):
