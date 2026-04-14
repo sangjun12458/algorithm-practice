@@ -3,17 +3,23 @@ from collections import deque
 DIR = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 MAX_D = 1000
 
-N, M, gas = map(int, input().split())
+N, M, fuel = map(int, input().split())
 arr = [list(map(int, input().split())) for _ in range(N)]
 taxi_r, taxi_c = map(lambda x: int(x)-1, input().split())
-customer = [list(map(lambda x: int(x)-1, input().split())) for _ in range(M)]
-customer.sort()
 
-def cal_distance(start_r, start_c, end_r, end_c):
-    visited = [[False] * N for _ in range(N)]
-    q = deque([(start_r, start_c, 0)])
+passengers = {}
+for _ in range(M):
+    sy, sx, ey, ex = map(lambda x: int(x)-1, input().split())
+    passengers[(sy, sx)] = (ey, ex)
+
+def cal_distance(sr, sc, end_r, end_c):
+    visited = [[-1] * N for _ in range(N)]
+    q = deque([(sr, sc)])
     while q:
-        r, c, d = q.popleft()
+        r, c = q.popleft()
+        dist = visited[r][c]
+
+        
         if r == end_r and c == end_c:
             return d
         if visited[r][c]:
@@ -54,4 +60,4 @@ for _ in range(M):
     taxi_r, taxi_c = er, ec
     proccessed[target] = True
 
-print(gas)
+print(fuel)
