@@ -37,7 +37,7 @@ for _ in range(M):
         fuel = -1
         break
     fuel -= visited[target[0]][target[1]]
-
+    print(fuel)
     # 출발지에서 목적지까지 최단거리
     ey, ex = passengers[target]
     passengers.pop(target)
@@ -65,5 +65,7 @@ for _ in range(M):
         break
     fuel += fuel_used
     ty, tx = ey, ex
+
+    print(fuel)
 
 print(fuel)
