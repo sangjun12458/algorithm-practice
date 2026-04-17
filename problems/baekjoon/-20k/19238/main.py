@@ -37,7 +37,7 @@ for _ in range(M):
         fuel = -1
         break
     fuel -= visited[target[0]][target[1]]
-    print(fuel)
+
     # 출발지에서 목적지까지 최단거리
     ey, ex = passengers[target]
     passengers.pop(target)
@@ -59,6 +59,7 @@ for _ in range(M):
             if visited[ny][nx] != -1:
                 continue
             q.append((ny, nx))
+            visited[ny][nx] = visited[y][x] + 1
 
     if fuel_used > fuel: # 길이 없거나 연료가 부족하여 종료
         fuel = -1
@@ -66,6 +67,7 @@ for _ in range(M):
     fuel += fuel_used
     ty, tx = ey, ex
 
+    print(fuel_used)
     print(fuel)
 
 print(fuel)
