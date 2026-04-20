@@ -21,11 +21,10 @@ for _ in range(M):
     while q:
         y, x = q.popleft()
         if passengers.get((y, x)):
-            if visited[y][x] > visited[target[0]][target[1]]:
-                break
             if target is None:
                 target = (y, x)
-
+            if visited[y][x] > visited[target[0]][target[1]]:
+                break
             if target[0] < y:
                 target = (y, x)
             elif target[0] == y and target[1] < x:
