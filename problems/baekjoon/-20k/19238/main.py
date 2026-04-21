@@ -23,13 +23,12 @@ for _ in range(M):
         if passengers.get((y, x)):
             if target is None:
                 target = (y, x)
+                continue
             if visited[y][x] > visited[target[0]][target[1]]:
                 break
-            if target[0] < y:
+            if (target[0] > y) or (target[0] == y and target[1] > x):
                 target = (y, x)
-            elif target[0] == y and target[1] < x:
-                target = (y, x)
-
+ 
         for dy, dx in DIR:
             ny, nx = y + dy, x + dx
             if not (0 <= ny < N and 0 <= nx < N):
@@ -43,9 +42,7 @@ for _ in range(M):
     if target is None: # 승객에게 갈 수 없으므로 종료
         fuel = -1
         break
-    print(fuel)
     fuel -= visited[target[0]][target[1]]
-    print(fuel)
 
     # 출발지에서 목적지까지 최단거리
     ey, ex = passengers[target]
@@ -57,7 +54,6 @@ for _ in range(M):
     while q:
         y, x = q.popleft()
         if y == ey and x == ex:
-            print(y, x)
             fuel_used = visited[y][x]
             break
         for dy, dx in DIR:
@@ -76,8 +72,5 @@ for _ in range(M):
         break
     fuel += fuel_used
     ty, tx = ey, ex
-
-    print(fuel)
-    print()
 
 print(fuel)
