@@ -18,19 +18,14 @@ for _ in range(N):
             # 기준점에 대해 회전
             dr, dc = er - ec, er + ec
             nr, nc = pc + dr, -pr + dc
-            if 0 <= nr < 100 and 0 <= nc < 100:
+            if 0 <= nr <= 100 and 0 <= nc <= 100:
                 curves.append((nr, nc))
-            else:
-                break
-
-    # print(curves)
+            # else:
+            #     break
+            
     for y, x in curves:
         grid[y][x] = 1
     
-    # for row in grid[:10]:
-    #     print(row[:10])
-    # print()
-
 answer = 0
 for i in range(100):
     for j in range(100):

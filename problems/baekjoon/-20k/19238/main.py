@@ -19,6 +19,7 @@ for _ in range(M):
     visited[ty][tx] = 0
     target = None
     while q:
+        ####
         y, x = q.popleft()
         if passengers.get((y, x)):
             if target is None:
@@ -28,7 +29,7 @@ for _ in range(M):
                 break
             if (target[0] > y) or (target[0] == y and target[1] > x):
                 target = (y, x)
- 
+
         for dy, dx in DIR:
             ny, nx = y + dy, x + dx
             if not (0 <= ny < N and 0 <= nx < N):
