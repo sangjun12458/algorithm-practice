@@ -1,19 +1,42 @@
 # 1562. 계단 수
 
-DIVISOR = 1_000_000_000
+import sys
+input = sys.stdin.readline
 
-N = int(input())
+MOD = 1_000_000_000
+n = int(input())
 
-arr = [[0] * 10 for _ in range(N+1)]
+# dp[length][digit][bitmask]
+dp = [[[0] * (1 << 10) for _ in range(10)] for _ in range(n + 1)]
+
+# 초기값
 for i in range(1, 10):
-    arr[1][i] = 1
+    dp[1][i][1 << i] = 1
 
-for digit in range(1, N):
-    arr[digit+1][0] = (arr[digit][0] + arr[digit][1]) % DIVISOR
-    arr[digit+1][9] = (arr[digit][8] + arr[digit][9]) % DIVISOR
-    for i in range(2, 9):        
-        arr[digit+1][i] = (arr[digit][i-1] + arr[digit][i] + arr[digit][i+1]) % DIVISOR
+for i in range(2, n + 1):
+    for j in range(10):
+        for bit in range(1 << 10):
+            if dp[i-1][j][bit] == 0:
+                continue
 
-print(arr)
+            # j-1
+            if j > 0:
+                nb = bit | (1 << (j-1))
+                dp[i][j-1][nb] += dp[i-1][j][bit]
+                dp[i][j-1][nb] %= MOD
 
-print(sum(arr[N]) % DIVISOR)
+            # j+1
+            if j < 9:
+                nb = bit | (1 << (j+1))
+                dp[i][j+1][nb] += dp[i-1][j][bit]
+                dp[i][j+1][nb] %= MOD
+
+# 모든 숫자 사용한 경우만 합산
+full = (1 << 10) - 1
+answer = 0
+
+for j in range(10):
+    answer += dp[n][j][full]
+    answer %= MOD
+
+print(answer)
