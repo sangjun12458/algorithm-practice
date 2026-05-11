@@ -10,5 +10,11 @@ def solution(n, w, num):
     num_b = num_a // w
     num_c = num_a % w
 
+    answer += num_a
+    if num_b % 2 == 0:
+        pass
+    else:
+        pass
+
 
     return answer
