@@ -1,20 +1,22 @@
 
 def solution(n, w, num):
     answer = 0
-    a = n // (2*w)
-    n %= 2*w
-    b = n // w
-    n %= w
     
-    num_a = num // (2*w)
-    num_b = num_a // w
-    num_c = num_a % w
+    # 전체 택배의 높이
+    sh1 = n // (2*w)
+    r = n % (2*w)
+    sh2 = r // w
+    r %= w
 
-    answer += num_a
-    if num_b % 2 == 0:
-        pass
-    else:
-        pass
+    height = 2 * sh1 + sh2
 
+    # 원하는 택배의 높이
+    num_sh1 = num // (2*w)
+    num_r = num % (2*w)
+    num_sh2 = num_r // w
+    num_r %= w
+
+    num_height = 2 * num_sh1 + num_sh2
+    num_idx = w - num_r if num_sh2 else num_r-1
 
     return answer
