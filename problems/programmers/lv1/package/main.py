@@ -19,4 +19,6 @@ def solution(n, w, num):
     num_height = 2 * num_sh1 + num_sh2
     num_idx = w - num_r if num_sh2 else num_r-1
 
+    answer = num_height - height
+
     return answer
