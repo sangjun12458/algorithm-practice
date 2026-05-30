@@ -19,5 +19,9 @@ def solution(mats, park):
                     if nc >= col_len:
                         continue
                     if park[nr][nc] != '-1':
-                        pass
+                        check_square[max(nr, nc)] = False
+            for idx, x in enumerate(check_square):
+                if x:
+                    answer = max(answer, idx)
+
     return answer
