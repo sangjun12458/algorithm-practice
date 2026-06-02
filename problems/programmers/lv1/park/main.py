@@ -21,7 +21,7 @@ def solution(mats, park):
                     if park[nr][nc] != '-1':
                         check_square[max(dr, dc)] = False
             for idx, x in enumerate(check_square):
-                if x:
+                if x and idx in mats:
                     answer = max(answer, idx)
 
     return answer
