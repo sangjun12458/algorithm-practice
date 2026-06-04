@@ -3,12 +3,15 @@ def solution(mats, park):
 
     row_len = len(park)
     col_len = len(park[0])
-    max_len = max(mats)
+    # max_len = max(mats)
+    mats.sort()
 
     def check(r, c, l):
         for i in range(r, r+l):
             for j in range(c, c+l):
-                if park[i][j] != -1:
+                if not (0 <= i < row_len and 0 <= j < col_len):
+                    return False
+                if park[i][j] != "-1":
                     return False
         return True
 
