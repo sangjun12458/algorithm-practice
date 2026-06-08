@@ -3,7 +3,6 @@ def solution(mats, park):
 
     row_len = len(park)
     col_len = len(park[0])
-    # max_len = max(mats)
     mats.sort()
 
     def check(r, c, l):
