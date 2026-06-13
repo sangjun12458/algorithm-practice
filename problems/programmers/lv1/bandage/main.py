@@ -7,6 +7,8 @@ def solution(bandage, health, attacks):
         # 피해
         health -= damage
 
+        if health <= 0 return -1
+
         # 다시 붕대 감기
         nt = attacks[idx+1][0]
         interval = nt - t
