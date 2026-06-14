@@ -14,5 +14,6 @@ def solution(bandage, health, attacks):
         health += interval * bandage[1]
         if interval >= bandage[0]:
             health += bandage[2]
+            
 
     return answer
