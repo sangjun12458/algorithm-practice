@@ -6,5 +6,6 @@ def solution(cards1, cards2, goal):
 
     for g in goal:
         print(cards1.index(g))
+        
 
     return answer
