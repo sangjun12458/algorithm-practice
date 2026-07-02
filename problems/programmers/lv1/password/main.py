@@ -1,6 +1,7 @@
 def solution(s, skip, index):
     answer = ''
 
+    skip_number = [ord(x) - ord('a') for x in skip]
     origin = [chr(ord('a') + i) for i in range(26)]
     print(origin)
     shifted = [0] * 26
