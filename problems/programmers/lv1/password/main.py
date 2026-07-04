@@ -10,10 +10,9 @@ def solution(s, skip, index):
             shifted_number = (shifted_number + 1) % 26
             while shifted_number in skip_number:
                   shifted_number = (shifted_number + 1) % 26
-
-        # 각 알파벳 별 계산
-
+        shifted[i] = shifted_number
+ 
     for x in s:
-        answer += shifted[ord(x) - ord('a')]
-
+        answer += chr(ord('a') + shifted[ord(x) - ord('a')])
+ 
     return answer
