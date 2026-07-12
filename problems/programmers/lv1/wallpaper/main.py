@@ -7,4 +7,6 @@ def solution(wallpaper):
             if c == '#':
                 coords.append((idx_r, idx_c))
 
+    minr, minc, maxr, maxc = 0, 0, 0, 0
+    
     return answer
