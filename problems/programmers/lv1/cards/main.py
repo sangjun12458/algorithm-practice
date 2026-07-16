@@ -12,7 +12,7 @@ def solution(cards1, cards2, goal):
         else:
             break
 
-    if p1 == len(cards1)-1 and p2 == len(cards2)-1 and p3 == len(cards3)-1:
+    if p1 == len(cards1) and p2 == len(cards2) and p3 == len(goal):
         answer = "Yes"
     else:
         answer = 'No'
