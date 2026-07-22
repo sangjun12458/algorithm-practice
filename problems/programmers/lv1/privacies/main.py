@@ -9,6 +9,11 @@ def solution(today, terms, privacies):
         e_period[t] = int(p)
 
     for privacy in privacies:
-        py, pm, pd = map(int, privacy.split('.'))
+        pp, pt = privacy.split(' ')
+        py, pm, pd = map(int, pp.split('.'))
+        ep = e_period[pt]
+        py = py + (pm + ep) // 12
+        pm = (pm + ep) % 12
+        
 
     return answer
