@@ -22,3 +22,6 @@ def solution(today, terms, privacies):
             answer.append(idx+1)
 
     return answer
+
+a = []
+print(a)
