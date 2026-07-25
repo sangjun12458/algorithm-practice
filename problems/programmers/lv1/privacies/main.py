@@ -12,16 +12,13 @@ def solution(today, terms, privacies):
         pp, pt = privacy.split(' ')
         py, pm, pd = map(int, pp.split('.'))
         ep = e_period[pt]
-        py = py + (pm + ep) // 12
-        pm = (pm + ep) % 12
+        py = py + (pm + ep - 1) // 12
+        pm = (pm + ep - 1) % 12 + 1
         
         today = y * 10000 + m * 100 + d
         deadline = py * 10000 + pm * 100 + pd
-        print(today, deadline)
+
         if deadline <= today:
             answer.append(idx+1)
 
     return answer
-
-a = []
-print(a)
