@@ -8,11 +8,10 @@ def solution(keymap, targets):
         for idx, alphabet in enumerate(key):
             press_numbers[alphabet] = min(idx, press_numbers[alphabet])
 
-    def typing():
-        result = -1
-        return result
-
     for target in targets:
-        answer.append(typing(target))
+        cnt = 0
+        for x in target:
+            cnt += press_numbers[x]
+        answer.append(cnt)
 
     return answer
