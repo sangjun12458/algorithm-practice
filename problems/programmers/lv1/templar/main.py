@@ -1,4 +1,4 @@
-def solution(number, limit, power):
+def solution(number, limit, power): 
     answer = 0
 
     for x in range(number):
@@ -12,3 +12,7 @@ def solution(number, limit, power):
         answer += cnt if cnt <= limit else power
 
     return answer
+
+
+number, limit, power = 	5, 3, 2
+solution(number, limit, power)
