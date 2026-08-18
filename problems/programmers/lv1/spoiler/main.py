@@ -6,5 +6,5 @@ def solution(message, spoiler_ranges):
 
     return answer
 
-message, spoiler_ranges = "here is muzi here is a secret message", [[0, 3], [23, 28]]
+message, spoiler_ranges = "my phone number is 01012345678 and may i have your phone number", [[5, 5], [25, 28], [34, 40], [53, 59]]
 solution(message, spoiler_ranges)
