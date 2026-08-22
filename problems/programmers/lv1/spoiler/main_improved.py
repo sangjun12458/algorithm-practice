@@ -23,6 +23,13 @@ def solution(message, spoiler_ranges):
     spoiler_words = set()
     j = 0
     for start, end, word in positions:
-        pass
+        while j < len(merged) and merged[j][1] < start:
+            j += 1
+
+        if j < len(merged) and merged[j][0] <= start and end <= merged[j][1]:
+            spoiler_words.add(word)
+
+    # 전체 등장 횟수와 스포일러 등장 횟수
+
 
     return answer
