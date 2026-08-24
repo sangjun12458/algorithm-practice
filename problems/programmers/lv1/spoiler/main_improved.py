@@ -30,6 +30,13 @@ def solution(message, spoiler_ranges):
             spoiler_words.add(word)
 
     # 전체 등장 횟수와 스포일러 등장 횟수
+    total = {}
+    spoiler = {}
 
+    for start, end, word in positions:
+        total[word] = total.get(word, 0) + 1
+
+        if word in spoiler_words:
+            spoiler[word] = spoiler.get(word, 0) + 1
 
     return answer
