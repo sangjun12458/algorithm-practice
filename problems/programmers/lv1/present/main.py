@@ -6,11 +6,22 @@ def solution(friends, gifts):
     for i, f in enumerate(friends):
         nums[f] = i
     board = [[0] * n for _ in range(n)]
-    for sender, receiver in gifts:
+    for gift in gifts:
+        sender, receiver = gift.split(' ')
         s_num = nums[sender]
         r_num = nums[receiver]
         board[s_num][r_num] += 1
         board[r_num][s_num] -= 1
     
+    #best_sender = -1
+    best_score = -100
+    for i in range(n):
+        s_total = sum(board[i])
+        r_total = sum([board[j][i] for j in range(n)])
+        score = s_total - r_total
+        if score > best_score:
+            #best_sender = i
+            best_score = score
+    answer = best_score
 
     return answer
