@@ -14,14 +14,33 @@ def solution(friends, gifts):
         board[r_num][s_num] -= 1
     
     #best_sender = -1
-    best_score = -100
+    # best_score = -100
+    # for i in range(n):
+    #     s_total = sum(board[i])
+    #     r_total = sum([board[j][i] for j in range(n)])
+    #     score = s_total - r_total
+    #     if score > best_score:
+    #         #best_sender = i
+    #         best_score = score
+    # answer = best_score
+
     for i in range(n):
-        s_total = sum(board[i])
-        r_total = sum([board[j][i] for j in range(n)])
-        score = s_total - r_total
-        if score > best_score:
-            #best_sender = i
-            best_score = score
-    answer = best_score
+        for j in range(i+1, n):
+            score = board[i][j]
+            if score > 0:
+                board[i][i] += 1
+            elif score < 0:
+                board[j][j] += 1
+            else:
+                i_total = sum(board[i])
+                j_total = sum(board[j])
+                if i_total > j_total:
+                    board[i][i] += 1
+                elif i_total < j_total:
+                    board[j][j] += 1
+
+    answer = -100
+    for i in range(n):
+        answer = max(answer, board[i][i])
 
     return answer
