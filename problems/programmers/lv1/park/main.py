@@ -16,6 +16,8 @@ def solution(mats, park):
 
     for r in range(row_len):
         for c in range(col_len):
+            if park[r][c] != '-1':
+                continue
             for l in mats:
                 if check(r, c, l):
                     answer = max(answer, l)
