@@ -1,5 +1,5 @@
 def solution(mats, park):
-    answer = 0
+    answer = -1
 
     row_len = len(park)
     col_len = len(park[0])
