@@ -15,4 +15,10 @@ def solution(mats, park):
             row_sum += grid[r][c]
             ps[r+1][c+1] = ps[r][c+1]
 
+    mats.sort(reverse=True)
+    for L in mats:
+
+        if L > R or L > C:
+            continue
+
     return -1
