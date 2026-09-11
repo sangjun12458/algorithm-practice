@@ -6,10 +6,12 @@ def solution(numbers, hand):
 
     for n in numbers:
         if n in [1, 4, 7]:
-            pass
+            lh = n
+            answer += 'L'
         elif n in [3, 6, 9]:
-            pass
+            rh = n
+            answer += 'R'
         else:
             pass
-
+GIT A
     return answer
