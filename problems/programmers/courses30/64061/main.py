@@ -4,9 +4,13 @@ def solution(board, moves):
     answer = 0
 
     ss = [[]]
-    for b in board:
+    for i in range(len(board)-1, -1, -1):
+        for j in range(len(board[0])):
+            x = board[i][j]
+            ss[j].append(x)
+    for row in board:
         s = []
-        for x in b:
+        for x in row:
             if x:
                 s.append(x)            
         ss.append(s)
@@ -15,7 +19,7 @@ def solution(board, moves):
     for m in moves:
         if not ss[m]:
             continue
-        x = ss[m].pop()
+        x = ss[m].pop(0)
         if basket and basket[-1] == x:
             basket.pop()
             answer += 2
