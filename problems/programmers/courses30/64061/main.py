@@ -3,23 +3,18 @@
 def solution(board, moves):
     answer = 0
 
-    ss = [[]]
+    ss = [[] for _ in range(len(board)+1)]
     for i in range(len(board)-1, -1, -1):
         for j in range(len(board[0])):
             x = board[i][j]
-            ss[j].append(x)
-    for row in board:
-        s = []
-        for x in row:
             if x:
-                s.append(x)            
-        ss.append(s)
+                ss[j+1].append(x)
 
     basket = []
     for m in moves:
         if not ss[m]:
             continue
-        x = ss[m].pop(0)
+        x = ss[m].pop()
         if basket and basket[-1] == x:
             basket.pop()
             answer += 2
