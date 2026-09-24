@@ -13,5 +13,11 @@ def solution(data, ext, val_ext, sort_by):
     for code, date, maximum, remain in data:
         if ext == 'code':
             pass
-
+        elif ext == 'date':
+            pass
+        elif ext == 'maximum':
+            pass
+        elif ext == 'remain':
+            pass
+        
     return answer
