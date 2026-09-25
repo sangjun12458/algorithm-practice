@@ -3,21 +3,19 @@
 def solution(data, ext, val_ext, sort_by):
     answer = [[]]
 
-    # criteria_num = 0
-    # if ext == 'date':
-    #     criteria_num = 1
-    # elif ext == 'maximum':
-    #     criteria_num = 2
-    # elif ext == 'remain':
-    #     criteria_num = 3
-    for code, date, maximum, remain in data:
+    for idx, code, date, maximum, remain in enumerate(data):
+        criteria_num = 0
         if ext == 'code':
-            pass
+            criteria_num = 0
         elif ext == 'date':
-            pass
+            criteria_num = 1
         elif ext == 'maximum':
-            pass
+            criteria_num = 2
         elif ext == 'remain':
-            pass
-        
+            criteria_num = 3
+        if data[idx] < val_ext:
+            answer.append([code, date, maximum, remain])
+
+    answer.sort()
+
     return answer
