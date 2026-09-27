@@ -3,19 +3,12 @@
 def solution(data, ext, val_ext, sort_by):
     answer = []
 
-    for idx, (code, date, maximum, remain) in enumerate(data):
-        criteria_num = 0
-        if ext == 'code':
-            criteria_num = 0
-        elif ext == 'date':
-            criteria_num = 1
-        elif ext == 'maximum':
-            criteria_num = 2
-        elif ext == 'remain':
-            criteria_num = 3
-        if data[idx][criteria_num] < val_ext:
-            answer.append([code, date, maximum, remain])
+    key_index = {'code': 0, 'date': 1, 'maximum': 2, 'remain': 3}
 
-    answer.sort(key=lambda x: x[criteria_num], reverse=True)
+    for idx, (code, date, maximum, remain) in enumerate(data):
+        if data[idx][key_index[ext]] < val_ext:
+            answer.append([code, date, maximum, remain])
+        
+    answer.sort(key=lambda x: x[key_index[sort_by]])
 
     return answer
