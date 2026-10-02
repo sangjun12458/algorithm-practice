@@ -6,4 +6,6 @@ def solution(k, m, score : list):
     for i in range(t):
         answer += score[i*m+2] * m
 
+
+
     return answer
