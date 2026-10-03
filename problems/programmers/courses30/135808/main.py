@@ -4,8 +4,6 @@ def solution(k, m, score : list):
     score.sort(reverse=True)
     t = len(score) // m
     for i in range(t):
-        answer += score[i*m+2] * m
-
-
+        answer += score[i*m+m-1] * m
 
     return answer
