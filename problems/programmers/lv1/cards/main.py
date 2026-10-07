@@ -1,21 +1,18 @@
-def solution(cards1, cards2, goal):
+def solution(cards1 : list, cards2 : list, goal : list):
     answer = ''
-    l1, l2, l3 = len(cards1), len(cards2), len(goal)
-    p1, p2, p3 = 0, 0, 0
-    while p3 < l3 and (p1 < l1 or p2 < l2):
-        if p1 < l1 and goal[p3] == cards1[p1]:
-            p1 += 1
-            p3 += 1
-        elif p2 < l2 and goal[p3] == cards2[p2]:
-            p2 += 1
-            p3 += 1
-        else:
-            p1 += 1
-            p2 += 1
-            
-    if p1 == len(cards1) and p2 == len(cards2) and p3 == len(goal):
-        answer = "Yes"
-    else:
-        answer = 'No'
 
+    s1, s2 = 0, 0
+    result = 'Yes'
+    for word in goal:
+        if word in cards1[s1:]:
+            idx = cards1[s1:].index(word)
+            s1 = idx + 1
+        elif word in cards2[s2:]:
+            idx = cards2[s2:].index(word)
+            s2 = idx + 1
+        else:
+            result = "No"
+            break
+        
+    answer = result
     return answer
