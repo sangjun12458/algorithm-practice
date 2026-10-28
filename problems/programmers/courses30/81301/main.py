@@ -9,6 +9,7 @@ def solution(s: str):
         word = words[i]
         while word in s:
             idx = s.index(word)
-            
+            s = s[:idx] + str(i) + s[idx:]
+    answer = int(s)
 
     return answer
