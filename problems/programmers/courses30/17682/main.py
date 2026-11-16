@@ -1,9 +1,12 @@
 def solution(dartResult):
     answer = 0
     nums = []
-    for x in dartResult:
+    for i, x in enumerate(dartResult):
         if '0' <= x <= '9':
-            nums.append(int(x))
+            if dartResult[i+1] == '0':
+                nums.append(10)
+            else:
+                nums.append(int(x))
         else:
             if x == 'S':
                 pass
