@@ -3,13 +3,13 @@ def solution(dartResult):
     nums = []
     for i, x in enumerate(dartResult):
         if '0' <= x <= '9':
-            if dartResult[i+1] == '0':
-                nums.append(10)
+            if x == '0' and dartResult[i-1] == '1':
+                nums[-1] = 10
             else:
                 nums.append(int(x))
         else:
             if x == 'S':
-                pass
+                continue
             elif x == 'D':
                 nums[-1] **= 2
             elif x == 'T':
