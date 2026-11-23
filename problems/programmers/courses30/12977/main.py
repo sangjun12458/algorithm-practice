@@ -1,11 +1,18 @@
 def solution(nums):
     answer = -1
-    cnts = [0] * 3000
-    for n in nums:
-        cnts[n] += 1
-    for _ in range(2):
-        for n in nums:
-            for i in range(3000):
-                if cnts[i]:
-                    cnts[i + n] += cnts[i]
+    pn = [True] * 3000
+    pn[0] = pn[1] = False
+    for i in range(2, 3000):
+        if not pn[i]:
+            continue
+        for j in range(2*i, 3000, i):
+            pn[j] = False
+    l = len(nums)
+    cnt = 0
+    for i in range(l):
+        for j in range(i+1, l):
+            for k in range(j+1, l):
+                if pn[nums[i] + nums[j] + nums[k]]:
+                    cnt += 1
+    answer = cnt
     return answer
