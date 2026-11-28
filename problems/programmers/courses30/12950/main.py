@@ -5,4 +5,4 @@ def solution(arr1, arr2):
         for x, y in zip(a, b):
             r.append(x + y)
         answer.append(r)
-    return answer
+    return answe
